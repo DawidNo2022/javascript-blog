@@ -41,7 +41,8 @@ const optArticleSelector = '.post', // przypisanie wszystkich elemntow klasy pos
   optTitleSelector = '.post-title', //??
   optTitleListSelector = '.titles',
   optArticleTagsSelector ='.post-tags .list',
-  optArticleAuthorSelector ='.post-author';
+  optArticleAuthorSelector ='.post-author',
+  optTagsListSelector='.tags.list';
 
 function generateTitleLinks(customSelector=''){
 
@@ -84,6 +85,8 @@ generateTitleLinks();
 
 //generowanie tagow
 function generateTags(){
+  /* [NEW] create a new variable allTags with an empty array */
+  let allTags = [];
   /* find all articles */
   const articles=document.querySelectorAll(optArticleSelector);
   for(let article of articles) {
@@ -107,11 +110,21 @@ function generateTags(){
       const linkHTML = '<li><a href="#tag-' + tag + '"><span>' + tag + '</span></a></li>';
       console.log('html tags: ',linkHTML);
       html=html + linkHTML;
+      /* [NEW] check if this link is NOT already in allTags */
+      if(allTags.indexOf(linkHTML) == -1){
+        /* [NEW] add generated code to allTags array */
+        allTags.push(linkHTML);
+      }
     /* END LOOP: for each tag */
     }
     /* insert HTML of all the links into the tags wrapper */
     articleList.innerHTML=html;
   }  /* END LOOP: for every article: */
+  /* [NEW] find list of tags in right column */
+  const tagList = document.querySelector(optTagsListSelector);
+
+  /* [NEW] add html from allTags to tagList */
+  tagList.innerHTML = allTags.join(' ');
 }
   
 generateTags();
@@ -171,7 +184,7 @@ function generateAuthors(){
   
     /* START LOOP: for every article: */
       
-    /* find tags wrapper */
+    /* find author wrapper */
     const authorList=article.querySelector(optArticleAuthorSelector);
     /* make html variable with empty string */
     let html='';
@@ -186,7 +199,7 @@ function generateAuthors(){
     html=html + linkHTML;
     /* END LOOP: for each tag */
       
-    /* insert HTML of all the links into the tags wrapper */
+    /* insert HTML of all the links into the author wrapper */
     authorList.innerHTML=html;
   }  /* END LOOP: for every article: */
   

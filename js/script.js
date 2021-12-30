@@ -1,8 +1,14 @@
+/* eslint-disable no-prototype-builtins */
 'use strict';
 //Ustawienia
 //const optArticleSelector = '.post'; // przypisanie wszystkich elemntow klasy post??
 //const optTitleSelector = '.post-title'; //??
 //const optTitleListSelector = '.titles';
+/*const templates = {
+  articleLink: Handlebars.compile(
+    document.querySelector('#template-article-link').innerHTML
+  ),
+};*/
 const optArticleTagsSelector = '.post-tags .list';
 const optArticleAuthorSelector = '.post-author';
 const optTagsListSelector = '.tags.list';
@@ -70,6 +76,8 @@ function generateTitleLinks(customSelector = '') {
 
     /* create HTML of the link */
     const linkHTML = `<li><a href=#${articleId}><span>${articleTitle}</span></a></li>`;
+    //const linkHTMLData = { id: articleId, title: articleTitle };
+    //const linkHTML = templates.articleLink(linkHTMLData);
     console.log(linkHTML);
     html += linkHTML;
     /* insert link into titleList */
@@ -250,7 +258,7 @@ function generateAuthors() {
       allAuthors[articleAuthor]++;
     }
     for (let autor in allAuthors) {
-      htmlAuthor += `<li><a href="#author${autor}"><span>${autor}  (${allAuthors[autor]})</span>`;
+      htmlAuthor += `<li><a href="#author${autor}"><span>${autor}  (${allAuthors[autor]})</span></li>`;
     }
     authorListSel.innerHTML = htmlAuthor;
   } /* END LOOP: for every article: */
